@@ -1,10 +1,14 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import morgan from 'morgan';
 import { bootCampRoutes } from './routes/bootCampRoutes';
 import { logger } from './middlewares/loggerMiddleware';
+import { dbConnect } from './config/dbConnect';
+
+//db
+dbConnect();
 //load env vars
 //Because we put them in a special location we have to it like this
+
 dotenv.config({ path: '/config/config.env' });
 const app = express();
 

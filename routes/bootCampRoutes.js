@@ -10,8 +10,9 @@ import {
 const bootCampRoutes = express.Router();
 
 bootCampRoutes.post('/', createNewBootcampController);
-bootCampRoutes.get('/', getBootcampController);
 bootCampRoutes.get('/', getBootcampsController);
+bootCampRoutes.get('/:id', getBootcampController);
+
 bootCampRoutes.delete('/:id', deleteBootcampController);
 
 bootCampRoutes.put('/:id', updateBootcampController);
