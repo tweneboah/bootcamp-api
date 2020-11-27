@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import { bootCampRoutes } from './routes/bootCampRoutes';
 import { logger } from './middlewares/loggerMiddleware';
 import { dbConnect } from './config/dbConnect';
+import { errorHandler } from './middlewares/error';
 
 //db
 dbConnect();
@@ -25,6 +26,8 @@ app.use(logger);
 // mount routes
 app.use('/api/v1/bootcamps', bootCampRoutes);
 
+//error middleware
+app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 app.listen(
   PORT,
