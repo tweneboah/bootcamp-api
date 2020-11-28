@@ -1,15 +1,17 @@
 import { Bootcamp } from '../models/BootcampModel';
+import { ErrorResponse } from '../utils/errorResponse';
 
 // @desc POST Create bootcamps
 //@ route GET api/v1/bootcamps
 //@access Private
 
 const createNewBootcampController = async (req, res, next) => {
+  console.log(req.body);
   try {
     const bootcamp = await Bootcamp.create(req.body);
     res.status(201).json(bootcamp);
   } catch (error) {
-    res.status(400).json({ success: false });
+    res.status(400).json({ success: false, error: error });
   }
 };
 
@@ -36,7 +38,9 @@ const getBootcampController = async (req, res, next) => {
   try {
     const bootcamp = await Bootcamp.findById(req.params.id);
     if (!bootcamp) {
-      return res.status(400).json({ success: false });
+      return next(
+        new ErrorResponse(`Bootcamp not found of id ${req.params.id}`, 404)
+      );
     }
     res.status(200).json({
       success: true,
@@ -44,7 +48,7 @@ const getBootcampController = async (req, res, next) => {
     });
   } catch (error) {
     // res.status(400).json({ success: false });
-    next(error);
+    next(new ErrorResponse(`Bootcamp not found of id ${req.params.id}`, 404));
   }
 };
 
